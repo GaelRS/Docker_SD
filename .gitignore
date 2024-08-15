@@ -1,0 +1,62 @@
+# Visual Studio
+.vscode/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.dotCover
+*.dotTrace
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de compilación
+bin/
+obj/
+[Bb]uild/
+[Ll]og/
+
+# Paquetes NuGet
+*.nupkg
+*.snupkg
+.nuget/
+
+# Archivos de configuración de usuario
+*.user
+*.rsuser
+*.suo
+*.userprefs
+
+# Cache
+*.cache/
+*.tmp/
+
+# Archivos de cobertura de pruebas
+coverage/
+TestResult/
+*.trx
+*.coverage
+*.coveragexml
+
+# Archivos de logs
+*.log
+*.tlog
+
+# Archivos de distribución
+*.dll
+*.exe
+*.app
+*.ipa
+*.dmg
+*.pkg
+
+# Configuraciones específicas de Rider
+.idea/
+
+# Configuración de Azure
+.localhistory/
+
+# Secretos de usuario
+secrets.json
