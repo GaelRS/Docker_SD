@@ -10,10 +10,6 @@ public static class UserMapper {
             return null;
         }
 
-        if (user is null) {
-            return null;
-        }
-
         return new UserModel {
             Id = user.Id,
             Email = user.Email,
