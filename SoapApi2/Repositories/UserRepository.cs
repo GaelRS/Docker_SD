@@ -22,7 +22,9 @@ public class UserRespository : IUserRepository {
     
     public async Task<IList<UserModel>> GetAllByEmailAsync(string email, CancellationToken cancellationToken)
     {
-         var users = await _dbContext.Users.AsNoTracking().ToListAsync(cancellationToken);
-        return users.Select(email=>email.ToModel()).ToList();
+        var users = await _dbContext.Users.AsNoTracking().ToListAsync(cancellationToken);
+        return users .Where(users => users.Email.Contains(email, StringComparison.Ordinal)).Select(users => users.ToModel()).ToList();
+        /*Nota para recordar:
+        Tambien funciona con StringComparison.OrdinalIgnoreCase, pero no diferencia mayus y minus */
     }
 }

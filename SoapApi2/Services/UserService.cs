@@ -21,9 +21,7 @@ public class UserService : IUserContract {
     public async Task<IList<UserResponseDto>> GetAllByEmail(string email, CancellationToken cancellationToken)
     {
         var users = await _userRepository.GetAllByEmailAsync(email, cancellationToken);
-        return users .Where(users => users.Email.Contains(email, StringComparison.Ordinal)).Select(users => users.ToDto()).ToList();
-        /*Nota para recordar:
-        Tambien funciona con StringComparison.OrdinalIgnoreCase, pero no diferencia mayus y minus */
+        return users.Select(user => user.ToDto()).ToList();
     }   
 
     public async Task<UserResponseDto> GetUserById(Guid userId, CancellationToken cancellationToken) {
