@@ -1,6 +1,8 @@
 namespace SoapApi2.Models;
 
 public class UserModel {
+    internal Guid id;
+
     public Guid Id {get; set;}
     public string Email {get; set;} = null;
     public string FirstName {get; set;} = null;

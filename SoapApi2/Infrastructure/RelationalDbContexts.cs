@@ -9,4 +9,9 @@ public class RelationalDbContext : DbContext {
     }
 
     public DbSet<UserEntity> Users {get; set;}
+
+    internal object Where(Func<object, bool> value)
+    {
+        throw new NotImplementedException();
+    }
 }
