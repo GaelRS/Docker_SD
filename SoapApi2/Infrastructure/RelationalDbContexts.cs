@@ -9,7 +9,9 @@ public class RelationalDbContext : DbContext {
     }
 
     public DbSet<UserEntity> Users {get; set;}
+
     public DbSet<BookEntity> Books {get; set;}
+
 
     internal object Where(Func<object, bool> value)
     {
