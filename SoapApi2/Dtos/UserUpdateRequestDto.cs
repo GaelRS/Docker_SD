@@ -11,7 +11,6 @@ public class UserUpdateRequestDto {
     public string FirstName {get; set;} = null!;
     [DataMember ]
     public string LastName {get; set;} = null!;
-
     
     [DataMember]
     public DateTime BirthDate {get; set;}
