@@ -1,3 +1,4 @@
+using MongoDB.Bson;
 using MongoDB.Driver;
 using RestApi.Infrastructure.Mongo;
 using RestApi.Mappers;
@@ -26,5 +27,9 @@ public class GroupRepository : IGroupRepository
             return null;
         }
     }
-
+    public async Task<IList<GroupModel>> GetByNameAsync(string name, CancellationToken cancellationToken){
+        var filter = Builders<GroupEntity>.Filter.Regex(group => group.Name, new BsonRegularExpression(name, "i"));
+        var groups = await _groups.Find(filter).ToListAsync(cancellationToken);
+        return groups.Select(group => group.ToModel()).ToList();
+    }
 }
