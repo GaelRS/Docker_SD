@@ -30,5 +30,4 @@ public class GroupsController : ControllerBase {
         return Ok(groups.Select(group => group.ToDto()).ToList());
     }
 
-
 }

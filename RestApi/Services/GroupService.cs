@@ -25,6 +25,7 @@ public class GroupService : IGroupService
             CreationDate = group.CreationDate
         };
     }
+
     public async Task<IList<GroupUserModel>> GetGroupByNameAsync(string name, CancellationToken cancellationToken)
     {
         var groups = await _groupRepository.GetByNameAsync(name, cancellationToken);
@@ -39,5 +40,4 @@ public class GroupService : IGroupService
             CreationDate = group.CreationDate
         }).ToList();
     }
-
 }
