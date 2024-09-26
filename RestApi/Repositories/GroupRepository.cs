@@ -43,7 +43,7 @@ public class GroupRepository : IGroupRepository
             return null;
         }
     }
-   /* public async Task<IList<GroupModel>> GetByNameAsync(string name, int page, int pageS, string orderBy, CancellationToken cancellationToken){
+    public async Task<IList<GroupModel>> GetByNameAsync(string name, int page, int pageS, string orderBy, CancellationToken cancellationToken){
         var filter = Builders<GroupEntity>.Filter.Regex(group => group.Name, new BsonRegularExpression(name, "i"));
         
         var sort = Builders<GroupEntity>.Sort.Ascending(n => n.Name);
@@ -56,7 +56,7 @@ public class GroupRepository : IGroupRepository
 
         var groups = await groupsOr.ToListAsync(cancellationToken);
         return groups.Select(group => group.ToModel()).ToList();
-    }*/
+    }
 
     //Nuevo método de GetGroupByName2, este funciona para hacer una busqueda exacta
 

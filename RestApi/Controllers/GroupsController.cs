@@ -28,35 +28,17 @@ public class GroupsController : ControllerBase {
         return Ok(group.ToDto());
     }
     
-    /*[HttpGet]
+    [HttpGet]
     public async Task<ActionResult<IList<GroupResponse>>> GetGroupByName([FromQuery] string name, 
     [FromQuery] int page, [FromQuery] int pageS, [FromQuery] string orderBy, CancellationToken cancellationToken){
         
         var groups = await _groupService.GetGroupByNameAsync(name, page, pageS, orderBy, cancellationToken);
 
         return Ok(groups.Select(group => group.ToDto()).ToList());
-    }*/
+  
 
-    //Nuevo método de GetGroupByName2, este funciona para hacer una busqueda exacta
-    /*[HttpGet]
-    public async Task<ActionResult<IList<GroupResponse>>> GetGroupByName2([FromQuery] string name, 
-    [FromQuery] int page, [FromQuery] int pageS, [FromQuery] string orderBy, CancellationToken cancellationToken){
-        
-        var groups = await _groupService.GetGroupByNameAsync2(name, page, pageS, orderBy, cancellationToken);
-
-        return Ok(groups.Select(group => group.ToDto()).ToList());
-    }*/
-
-    //Nuevo método de GetGroupByName2, este funciona para hacer una busqueda exacta sin paginación
-    [HttpGet]
-    public async Task<ActionResult<IList<GroupResponse>>> GetGroupByName2([FromQuery] string name, CancellationToken cancellationToken){
-        
-        var groups = await _groupService.GetGroupByNameAsync2(name, cancellationToken);
-
-        return Ok(groups.Select(group => group.ToDto()).ToList());
     }
-
-
+    
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteGroupById(string id, CancellationToken cancellationToken){
       try{

@@ -73,7 +73,7 @@ public class GroupService : IGroupService
         };
     }
 
-   /*public async Task<IList<GroupUserModel>> GetGroupByNameAsync(string name,int page, int pageS, string orderBy, CancellationToken cancellationToken)
+   public async Task<IList<GroupUserModel>> GetGroupByNameAsync(string name,int page, int pageS, string orderBy, CancellationToken cancellationToken)
     {
         var groups = await _groupRepository.GetByNameAsync(name, page, pageS, orderBy,  cancellationToken);
     
@@ -92,29 +92,9 @@ public class GroupService : IGroupService
                 .Where(user => user != null)
                 .ToList()
         }));
-    }*/
+    }
 
-   /* //Nuevo método de GetGroupByName2, este funciona para hacer una busqueda exacta
-    public async Task<IList<GroupUserModel>> GetGroupByNameAsync2(string name, int page, int pageS, string orderBy, CancellationToken cancellationToken)
-    {
-        var groups = await _groupRepository.GetByNameAsync2(name, page, pageS, orderBy,  cancellationToken);
-    
-        if (groups == null || !groups.Any())
-        {
-            return new List<GroupUserModel>(); 
-        }
 
-        return await Task.WhenAll(groups.Select(async group => new GroupUserModel
-        {
-            Id = group.Id,
-            Name = group.Name,
-            CreationDate = group.CreationDate,
-            Users = (await Task.WhenAll(
-                group.Users.Select(userId => _userRepository.GetByIdAsync(userId, cancellationToken))))
-                .Where(user => user != null)
-                .ToList()
-        }));
-    }*/
 
     //Nuevo método de GetGroupByName2, este funciona para hacer una busqueda exacta sin paginación
     public async Task<IList<GroupUserModel>> GetGroupByNameAsync2(string name, CancellationToken cancellationToken)
