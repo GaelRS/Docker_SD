@@ -90,6 +90,7 @@ public class GroupRepository : IGroupRepository
         return groups.Select(group => group.ToModel()).ToList();
     }
 
+
     public async Task UpdateGroupAsync(string id, string name, Guid[] users, CancellationToken cancellationToken)
     {
        var filter = Builders<GroupEntity>.Filter.Eq(x => x.Id, id);

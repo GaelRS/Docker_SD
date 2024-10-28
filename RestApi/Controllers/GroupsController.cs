@@ -57,12 +57,15 @@ public class GroupsController : ControllerBase {
             var group = await _groupService.CreateGroupAsync(groupRequest.Name, groupRequest.Users, cancellationToken);
             return CreatedAtAction(nameof(GetGroupById), new {id = group.Id}, group.ToDto());
 
+
         }catch(UserNotFoundException){
             return NotFound(NewValidationProblemDetails("One or more validation errors occurred", HttpStatusCode.NotFound, new Dictionary<string, string[]>{
                 {"Users",["User not found"]}
             }));
         }
         catch(InvalidGroupRequestFormatException){
+
+        }catch(InvalidGroupRequestFormatException){
             
             return BadRequest(NewValidationProblemDetails("One or more validation errors occurred", HttpStatusCode.BadRequest, new Dictionary<string, string[]>{
                 {"Groups",["Users array is empty"]}
@@ -102,7 +105,6 @@ public class GroupsController : ControllerBase {
             }));
         }
     }
-
     private static ValidationProblemDetails NewValidationProblemDetails(string title, HttpStatusCode statusCode, Dictionary<string, string[]>errors){
         return new ValidationProblemDetails{
             Title = title,

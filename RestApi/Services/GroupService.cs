@@ -29,6 +29,7 @@ public class GroupService : IGroupService
             throw new GroupAlreadyExistsException();
         }
 
+
         var usersE = await Task.WhenAll(users.Select(userId => _userRepository.GetByIdAsync(userId, cancellationToken)));
         if(usersE.Any(user => user is null)){
             throw new UserNotFoundException();
@@ -146,4 +147,7 @@ public class GroupService : IGroupService
 
         await _groupRepository.UpdateGroupAsync(id, name, users, cancellationToken);
     }
+
+    } 
+
 }
