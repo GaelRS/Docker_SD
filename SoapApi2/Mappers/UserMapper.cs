@@ -15,7 +15,7 @@ public static class UserMapper {
             Email = user.Email,
             FirstName = user.FirstName,
             LastName = user.LastName,
-            BirthDate= user.Birthday
+            BirthDate = user.Birthday  // Asegúrate que en UserEntity se llame "Birthday"
         };
     }
 
@@ -25,21 +25,17 @@ public static class UserMapper {
             Email = user.Email,
             FirstName = user.FirstName,
             LastName = user.LastName,
-            BirthDate = user.BirthDate
+            BirthDate = user.BirthDate  // Cambiado a BirthDate
         };
     }
-/*  Para GetAll
-    Public static IEnumerable<UserResponseDto> ToDto(this IEnumerable<UserModel>){
-        return users.Select(user => user.ToDto().ToList();
-    }
-*/
+
     public static UserEntity ToEntity(this UserModel user) {
         return new UserEntity {
             Id = user.Id,
             Email = user.Email,
             FirstName = user.FirstName,
             LastName = user.LastName,
-            Birthday = user.BirthDate
+            Birthday = user.BirthDate  // Cambiado a BirthDate
         };
     }
 
@@ -48,7 +44,7 @@ public static class UserMapper {
             Email = user.Email,
             FirstName = user.FirstName,
             LastName = user.LastName,
-            BirthDate = DateTime.UtcNow
+            BirthDate = DateTime.UtcNow  
         };
     }
 
@@ -57,7 +53,7 @@ public static class UserMapper {
             Id = user.UserId,
             FirstName = user.FirstName,
             LastName = user.LastName,
-            BirthDate = user.BirthDate
+            BirthDate = user.BirthDate  
         };
     }
 }
