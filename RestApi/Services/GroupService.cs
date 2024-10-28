@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Configuration.UserSecrets;
+using RestApi.Exceptions;
 using RestApi.Models;
 using RestApi.Repositories;
 
@@ -14,7 +15,45 @@ public class GroupService : IGroupService
         _groupRepository = groupRepository;
         _userRepository = userRepository;
     }
-    
+
+    public async Task<GroupUserModel> CreateGroupAsync(string name, Guid[] users, CancellationToken cancellationToken)
+    {
+        if(users.Length == 0){
+            throw new InvalidGroupRequestFormatException();
+        }
+
+        //var groups = await _groupRepository.GetByNameAsync(name, 1, 1, "Name", cancellationToken);
+        var groups = await _groupRepository.GetByNameAsync2(name, cancellationToken);
+        
+        if(groups.Any()){
+            throw new GroupAlreadyExistsException();
+        }
+
+        var group = await _groupRepository.CreateAsync(name, users, cancellationToken);
+
+        return new GroupUserModel {
+            Id = group.Id,
+            Name = group.Name,
+            CreationDate = group.CreationDate,
+            Users = (await Task.WhenAll(
+                group.Users.Select(userId => _userRepository.GetByIdAsync(
+                    userId, cancellationToken)))).Where(user => user != null)
+                    .ToList()
+        };
+
+    }
+
+    public async Task DeleteGroupByIdAsync(string id, CancellationToken cancellationToken)
+    {
+        var group = await _groupRepository.GetByIdAsync(id, cancellationToken);
+
+        if(group is null){
+            throw new GroupNotFoundException();
+        }
+
+        await _groupRepository.DeleteByIdAsync(id, cancellationToken);
+    }
+
     public async Task<GroupUserModel> GetGroupByIdAsync(string id, CancellationToken cancellationToken)
     {
         var group = await _groupRepository.GetByIdAsync(id, cancellationToken);
@@ -55,4 +94,27 @@ public class GroupService : IGroupService
         }));
     }
 
+
+
+    //Nuevo método de GetGroupByName2, este funciona para hacer una busqueda exacta sin paginación
+    public async Task<IList<GroupUserModel>> GetGroupByNameAsync2(string name, CancellationToken cancellationToken)
+    {
+        var groups = await _groupRepository.GetByNameAsync2(name, cancellationToken);
+    
+        if (groups == null || !groups.Any())
+        {
+            return new List<GroupUserModel>(); 
+        }
+
+        return await Task.WhenAll(groups.Select(async group => new GroupUserModel
+        {
+            Id = group.Id,
+            Name = group.Name,
+            CreationDate = group.CreationDate,
+            Users = (await Task.WhenAll(
+                group.Users.Select(userId => _userRepository.GetByIdAsync(userId, cancellationToken))))
+                .Where(user => user != null)
+                .ToList()
+        }));
+    } 
 }
