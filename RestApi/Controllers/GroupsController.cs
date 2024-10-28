@@ -57,6 +57,14 @@ public class GroupsController : ControllerBase {
             var group = await _groupService.CreateGroupAsync(groupRequest.Name, groupRequest.Users, cancellationToken);
             return CreatedAtAction(nameof(GetGroupById), new {id = group.Id}, group.ToDto());
 
+
+        }catch(UserNotFoundException){
+            return NotFound(NewValidationProblemDetails("One or more validation errors occurred", HttpStatusCode.NotFound, new Dictionary<string, string[]>{
+                {"Users",["User not found"]}
+            }));
+        }
+        catch(InvalidGroupRequestFormatException){
+
         }catch(InvalidGroupRequestFormatException){
             
             return BadRequest(NewValidationProblemDetails("One or more validation errors occurred", HttpStatusCode.BadRequest, new Dictionary<string, string[]>{
@@ -70,6 +78,33 @@ public class GroupsController : ControllerBase {
         }
     }
 
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateGroup (string id, [FromBody] UpdateGroupRequest groupRequest, CancellationToken cancellationToken){
+        try{
+
+            await _groupService.UpdateGroupAsync(id, groupRequest.Name, groupRequest.Users, cancellationToken);
+            return NoContent();
+
+        }catch(UserNotFoundException){
+            return NotFound(NewValidationProblemDetails("One or more validation errors occurred", HttpStatusCode.NotFound, new Dictionary<string, string[]>{
+                {"Users",["User not found"]}
+            }));
+        }
+        catch(GroupNotFoundException){
+            return NotFound();
+        }
+        catch(InvalidGroupRequestFormatException){
+            
+            return BadRequest(NewValidationProblemDetails("One or more validation errors occurred", HttpStatusCode.BadRequest, new Dictionary<string, string[]>{
+                {"Groups",["Users array is empty"]}
+            }));
+
+        }catch(GroupAlreadyExistsException){
+            return Conflict(NewValidationProblemDetails("One or more validation errors occurred", HttpStatusCode.Conflict, new Dictionary<string, string[]>{
+                {"Groups",["Group with same name already exists"]}
+            }));
+        }
+    }
     private static ValidationProblemDetails NewValidationProblemDetails(string title, HttpStatusCode statusCode, Dictionary<string, string[]>errors){
         return new ValidationProblemDetails{
             Title = title,
