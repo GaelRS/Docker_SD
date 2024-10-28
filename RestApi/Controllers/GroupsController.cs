@@ -75,6 +75,10 @@ public class GroupsController : ControllerBase {
         }
     }
 
+
+    }
+
+
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateGroup (string id, [FromBody] UpdateGroupRequest groupRequest, CancellationToken cancellationToken){
         try{
