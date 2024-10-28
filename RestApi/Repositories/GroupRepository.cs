@@ -58,25 +58,6 @@ public class GroupRepository : IGroupRepository
         return groups.Select(group => group.ToModel()).ToList();
     }
 
-    //Nuevo método de GetGroupByName2, este funciona para hacer una busqueda exacta
-
-   /* public async Task<IList<GroupModel>> GetByNameAsync2(string name, int page, int pageS, string orderBy, CancellationToken cancellationToken)
-    {
-        var filter = Builders<GroupEntity>.Filter.Eq(x => x.Name, name);
-        //NOTA para recordar: Si se quiere buscar sin distinguir mayúsculas y minúsculas se puede usar el siguiente código
-        //var filter = Builders<GroupEntity>.Filter.Eq(x => x.Name.ToLower(), name.ToLower());
-        
-        var sort = Builders<GroupEntity>.Sort.Ascending(n => n.Name);
-
-        if (orderBy != "Name") {
-            sort = Builders<GroupEntity>.Sort.Descending(n => n.CreatedAt);
-        }
-
-        var groupsOr = _groups.Find(filter).Sort(sort).Skip((page - 1) * pageS).Limit(pageS);
-
-        var groups = await groupsOr.ToListAsync(cancellationToken);
-        return groups.Select(group => group.ToModel()).ToList();
-    }*/
 
     //Nuevo método de GetGroupByName2, este funciona para hacer una busqueda exacta sin paginación
 
